@@ -73,7 +73,7 @@ async def handle_payment(message: Message, state: FSMContext):
     if "оплатил" in message.text.lower():
         # Сохраняем данные в файл
         data = await state.get_data()
-        save_response(data["name"], data["age"], data["pol"])
+        await save_response(data["name"], data["age"], data["pol"])
 
         await message.answer(
             "✅ Отлично! Я вижу твой платёж.\n"
@@ -110,6 +110,7 @@ async def main():
 if __name__ == ("__main__"):
 
     asyncio.run(main())
+
 
 
 
