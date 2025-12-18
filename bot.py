@@ -22,7 +22,6 @@ dp = Dispatcher()
 class Questionnaire(StatesGroup):
     name = State()      # Спрашиваем имя
     age = State()       # Спрашиваем возраст
-    pol = State()      # Спрашиваем город
     payment_confirmed = State()
 
 
@@ -54,12 +53,6 @@ async def process_age(message: Message, state: FSMContext):
         await message.answer("Пожалуйста, введи возраст цифрами.")
         return  # Остаёмся в том же состоянии
     await state.update_data(age=int(message.text))
-    await message.answer("Твой пол?")
-    await state.set_state(Questionnaire.pol)
-
-@dp.message(Questionnaire.pol)
-async def process_pol(message: Message, state: FSMContext):
-    await state.update_data(pol=message.text)
     await message.answer(
         f"Замечательно, вот и познакомились. А теперь к делу - для нахождения в лагере требуется взнос в размере 1 миллиарда рублей. Да, я понимаю, что это много, но оно того стоит, поверь. Да и нужно ведь мне на что-то жить? можешь скидывать деньги по номеру {PAYMENT_NUMBER} (Озон)\n\n"
         "После перевода напиши сюда: «Оплатил» ")
@@ -110,6 +103,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
