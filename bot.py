@@ -95,6 +95,15 @@ async def handle_payment(message: Message, state: FSMContext):
         await state.clear()
         return
 
+# 👇 ВОТ СЮДА ВСТАВЬ КОМАНДУ /reset 👇
+@dp.message(Command("reset"))
+async def reset_counter(message: Message):
+    if message.from_user.id != ADMIN_CHAT_ID:
+        return
+    save_count_to_file(0)
+    await message.answer("✅ Счётчик участников сброшен на 0!")
+
+# ... остальной код: save_response, main, запуск ...
     if "оплатил" not in message.text.lower():
         await message.answer("Пожалуйста, напиши «Оплатил», когда переведёшь.")
         return
@@ -154,6 +163,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
