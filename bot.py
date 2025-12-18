@@ -66,7 +66,7 @@ async def handle_payment(message: Message, state: FSMContext):
     if "оплатил" not in message.text.lower():
         await message.answer("Пожалуйста, напиши «Оплатил», когда переведёшь.")
         return 
-       try:
+    try:
         data = await state.get_data()
         # Отправляем данные админу
         await save_response(data["name"], data["age"])
@@ -109,6 +109,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
