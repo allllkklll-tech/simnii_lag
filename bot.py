@@ -90,7 +90,7 @@ async def handle_yes(callback: CallbackQuery, state: FSMContext):
     
 ADMIN_CHAT_ID = 5795412174  # твой ID в Telegram
 
-async def save_response(name, age, pol):
+async def save_response(name, age):
     report = f"Новый участник:\nИмя: {name}\nВозраст: {age}"
     await bot.send_message(ADMIN_CHAT_ID, report)
 
@@ -103,6 +103,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
