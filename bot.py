@@ -63,19 +63,25 @@ async def process_age(message: Message, state: FSMContext):
 
 @dp.message(Questionnaire.payment_confirmed)
 async def handle_payment(message: Message, state: FSMContext):
-    if "оплатил" in message.text.lower():
-        # Сохраняем данные в файл
+    if "оплатил" not in message.text.lower():
+        await message.answer("Пожалуйста, напиши «Оплатил», когда переведёшь.")
+        return 
+       try:
         data = await state.get_data()
+        # Отправляем данные админу
         await save_response(data["name"], data["age"])
-
+        
+        # Отвечаем пользователю
         await message.answer(
             "✅ Отлично! Я вижу твой платёж.\n"
-            "До встречи на новогоднем выезде! 🎄\n"
-            "Все детали пришлю ближе к дате."
+            "До встречи на новогоднем выезде! 🎄"
         )
+    except Exception as e:
+        print(f"Ошибка при обработке оплаты: {e}")
+        await message.answer("Произошла ошибка. Попробуй позже или свяжись с организатором.")
+    finally:
+        # ВСЕГДА завершаем FSM!
         await state.clear()
-    else:
-        await message.answer("Пожалуйста, напиши «Оплатил», когда переведёшь.")
 @dp.callback_query(F.data == "no")
 async def handle_no(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
@@ -91,7 +97,7 @@ async def handle_yes(callback: CallbackQuery, state: FSMContext):
 ADMIN_CHAT_ID = 5795412174  # твой ID в Telegram
 
 async def save_response(name, age):
-    report = f"Новый участник:\nИмя: {name}\nВозраст: {age}"
+    report = f"✅ Новый участник:\nИмя: {name}\nВозраст: {age}"
     await bot.send_message(ADMIN_CHAT_ID, report)
 
 
@@ -103,6 +109,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
