@@ -13,7 +13,7 @@ load_dotenv()  # загружает переменные из .env
 
 # === НОВОЕ: настройки счётчика ===
 COUNTER_FILE = "counter.txt"
-MAX_PARTICIPANTS = 20  # ← ЗАМЕНИ НА НУЖНОЕ КОЛИЧЕСТВО
+MAX_PARTICIPANTS = 5# ← ЗАМЕНИ НА НУЖНОЕ КОЛИЧЕСТВО
 ADMIN_CHAT_ID = 5795412174
 # ===============================
 def get_count_from_file():
@@ -154,6 +154,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
