@@ -62,6 +62,15 @@ async def send_welcome(message: types.Message ,state: FSMContext):
     await message.answer \
         ("Приветсвую, друг! Мы крайне желаем видеть тебя на нашем новогоднем выезде, который пройдёт на базе христианского лагеря Родник, c 1 по 3 января. Итак, ждать ли тебя на этом выезде?"
         ,reply_markup=Inline_keyboard)
+# 👇 ВОТ СЮДА ВСТАВЬ КОМАНДУ /reset 👇
+@dp.message(Command("reset"))
+async def reset_counter(message: Message):
+    if message.from_user.id != ADMIN_CHAT_ID:
+        return
+    await state.clear()
+    save_count_to_file(0)
+    await message.answer("✅ Счётчик участников сброшен на 0!")
+
 @dp.message(Questionnaire.name)
 async def process_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text)
@@ -94,14 +103,6 @@ async def handle_payment(message: Message, state: FSMContext):
         )
         await state.clear()
         return
-
-# 👇 ВОТ СЮДА ВСТАВЬ КОМАНДУ /reset 👇
-@dp.message(Command("reset"))
-async def reset_counter(message: Message):
-    if message.from_user.id != ADMIN_CHAT_ID:
-        return
-    save_count_to_file(0)
-    await message.answer("✅ Счётчик участников сброшен на 0!")
 
 # ... остальной код: save_response, main, запуск ...
     if "оплатил" not in message.text.lower():
@@ -163,6 +164,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
