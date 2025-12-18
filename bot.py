@@ -14,14 +14,6 @@ load_dotenv()  # загружает переменные из .env
 RESPONSES_FILE = "responses.txt"
 
 
-def save_response(name: str, age: int, pol: str):
-    #"""Сохраняет ответ пользователя в файл"""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    line = f"[{timestamp}] Имя: {name}, Возраст: {age}, Пол: {pol}\n"
-
-    # 'a' = append (дозапись в конец)
-    with open(RESPONSES_FILE, "a", encoding="utf-8") as f:
-        f.write(line)
 # Вставьте сюда ваш токен
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
@@ -104,7 +96,7 @@ async def handle_yes(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer("Замечательно! Тогда ответь на ряд вопросов:\nКак тебя зовут? (Фамилия Имя)")
     await state.set_state(Questionnaire.name)
     
-ADMIN_CHAT_ID = SimonBratt  # твой ID в Telegram
+ADMIN_CHAT_ID = 5795412174  # твой ID в Telegram
 
 async def save_response(name, age, pol):
     report = f"Новый участник:\nИмя: {name}\nВозраст: {age}\nПол: {pol}"
@@ -119,4 +111,5 @@ async def main():
 if __name__ == ("__main__"):
 
     asyncio.run(main())
+
 
