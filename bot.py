@@ -12,7 +12,7 @@ from datetime import datetime
 load_dotenv()  # загружает переменные из .env
 # Путь к файлу (будет создан в папке проекта)
 RESPONSES_FILE = "responses.txt"
-
+PAYMENT_NUMBER = os.getenv("PAYMENT_NUMBER")
 
 # Вставьте сюда ваш токен
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -57,12 +57,11 @@ async def process_age(message: Message, state: FSMContext):
     await message.answer("Твой пол?")
     await state.set_state(Questionnaire.pol)
 
-T = os.getenv("PAYMENT_NUMBER")
 @dp.message(Questionnaire.pol)
 async def process_pol(message: Message, state: FSMContext):
     await state.update_data(pol=message.text)
     await message.answer(
-        f"Замечательно, вот и познакомились. А теперь к делу - для нахождения в лагере требуется взнос в размере 1 миллиарда рублей. Да, я понимаю, что это много, но оно того стоит, поверь. Да и нужно ведь мне на что-то жить? можешь скидывать деньги по номеру {T} (Озон)\n\n"
+        f"Замечательно, вот и познакомились. А теперь к делу - для нахождения в лагере требуется взнос в размере 1 миллиарда рублей. Да, я понимаю, что это много, но оно того стоит, поверь. Да и нужно ведь мне на что-то жить? можешь скидывать деньги по номеру {PAYMENT_NUMBER} (Озон)\n\n"
         "После перевода напиши сюда: «Оплатил» ")
     await state.set_state(Questionnaire.payment_confirmed)
 
@@ -111,6 +110,7 @@ async def main():
 if __name__ == ("__main__"):
 
     asyncio.run(main())
+
 
 
 
