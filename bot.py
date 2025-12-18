@@ -104,7 +104,7 @@ async def handle_yes(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer("Замечательно! Тогда ответь на ряд вопросов:\nКак тебя зовут? (Фамилия Имя)")
     await state.set_state(Questionnaire.name)
     
-ADMIN_CHAT_ID = 123456789  # твой ID в Telegram
+ADMIN_CHAT_ID = SimonBratt  # твой ID в Telegram
 
 async def save_response(name, age, pol):
     report = f"Новый участник:\nИмя: {name}\nВозраст: {age}\nПол: {pol}"
@@ -119,3 +119,4 @@ async def main():
 if __name__ == ("__main__"):
 
     asyncio.run(main())
+
