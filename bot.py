@@ -94,6 +94,7 @@ async def process_age(message: Message, state: FSMContext):
 
 @dp.message(Questionnaire.payment_confirmed)
 async def handle_payment(message: Message, state: FSMContext):
+    print(f"📩 Получено 'Оплатил' от {message.from_user.id}")
     current_count = get_count_from_file()
 
     if current_count >= MAX_PARTICIPANTS:
@@ -164,6 +165,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
